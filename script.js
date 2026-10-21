@@ -1,5 +1,5 @@
 /* ====== PENGATURAN TOKO — ubah di sini ====== */
-const NO_WA_PENJUAL = "6287824771620";           // format 62, tanpa 0 / +
+const NO_WA_PENJUAL = "6281234567890";           // format 62, tanpa 0 / +
 const INFO_PO = "Batch terdekat: pengiriman Sabtu & Minggu. Kuota terbatas.";
 const TANGGAL_PO = ["Sabtu, 25 Okt 2026","Minggu, 26 Okt 2026","Sabtu, 1 Nov 2026"]; // batch PO
 const LEVEL = ["Level 0 (Original)","Level 1 (Pedas Ringan)","Level 2 (Pedas Sedang)","Level 3 (Pedas)","Level 4 (Sangat Pedas)","Level 5 (Extra Mercon)"];
@@ -9,7 +9,7 @@ const TOPPING = [
 ];
 const PRODUK = [
   {id:"p1",n:"Ceker Original Box",e:"🍗",h:25000,d:"Isi 10 pcs ceker empuk, bumbu gurih khas rumahan."},
-  {id:"p2",n:"Ceker Pedas Daun Jeruk",e:"🌶️",h:25000,d:"Isi 10 pcs, harum daun jeruk dengan cabai segar."},
+  {id:"p2",n:"Ceker Pedas Daun Jeruk",e:"🌶️",h:28000,d:"Isi 10 pcs, harum daun jeruk dengan cabai segar."},
   {id:"p3",n:"Ceker Mercon Jumbo",e:"🔥",h:45000,d:"Isi 20 pcs untuk berbagi. Cocok untuk pecinta pedas."},
   {id:"p4",n:"Ceker Boneless",e:"🥘",h:35000,d:"Tanpa tulang, isi 150 gram, praktis dimakan."}
 ];
@@ -97,6 +97,21 @@ $("send").onclick = () => {
   p += `💰 *TOTAL:* ${rp(total())}\n\n👤 *DATA PEMESAN:*\n`;
   p += `- Nama: ${nama}\n- No. WA: ${hp}\n- Alamat: ${alamat}\n- Opsi Kirim: ${$("kirim").value}\n\n`;
   p += "Mohon info total ongkir & nomor rekening pembayaran. Terima kasih!";
-  window.open(`https://wa.me/${NO_WA_PENJUAL}?text=${encodeURIComponent(p)}`, "_blank");
+  const url = `https://wa.me/${NO_WA_PENJUAL}?text=${encodeURIComponent(p)}`;
+  const w = window.open(url, "_blank");
+  if (!w) { window.location.href = url; return; } // popup diblokir: buka di tab ini, keranjang tetap aman
+
+  // Pesanan terkirim: kosongkan keranjang & form
+  cart = []; save(); render();
+  ["nama","wa","alamat"].forEach(id => $(id).value = "");
+  $("cartM").classList.remove("open");
+  toast("Pesanan dikirim ke WhatsApp. Terima kasih!");
 };
+
+function toast(msg){
+  const t = document.createElement("div");
+  t.className = "toast"; t.textContent = msg; t.setAttribute("role","status");
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 4000);
+}
 render();
