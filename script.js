@@ -9,7 +9,7 @@ const TOPPING = [
 ];
 const PRODUK = [
   {id:"p1",n:"Ceker Original Box",e:"🍗",h:25000,d:"Isi 10 pcs ceker empuk, bumbu gurih khas rumahan."},
-  {id:"p2",n:"Ceker Pedas Daun Jeruk",e:"🌶️",h:28000,d:"Isi 10 pcs, harum daun jeruk dengan cabai segar."},
+  {id:"p2",n:"Ceker Pedas Daun Jeruk",e:"🌶️",h:25000,d:"Isi 10 pcs, harum daun jeruk dengan cabai segar."},
   {id:"p3",n:"Ceker Mercon Jumbo",e:"🔥",h:45000,d:"Isi 20 pcs untuk berbagi. Cocok untuk pecinta pedas."},
   {id:"p4",n:"Ceker Boneless",e:"🥘",h:35000,d:"Tanpa tulang, isi 150 gram, praktis dimakan."}
 ];
