@@ -1,5 +1,5 @@
 /* ====== PENGATURAN TOKO — ubah di sini ====== */
-const NO_WA_PENJUAL = "6283820087262";           // format 62, tanpa 0 / +
+const NO_WA_PENJUAL = "6281234567890";           // format 62, tanpa 0 / +
 const INFO_PO = "Batch terdekat: pengiriman Sabtu & Minggu. Kuota terbatas.";
 const TANGGAL_PO = ["Sabtu, 25 Okt 2026","Minggu, 26 Okt 2026","Sabtu, 1 Nov 2026"]; // batch PO
 const LEVEL = ["Level 0 (Original)","Level 1 (Pedas Ringan)","Level 2 (Pedas Sedang)","Level 3 (Pedas)","Level 4 (Sangat Pedas)","Level 5 (Extra Mercon)"];
@@ -14,21 +14,25 @@ const PRODUK = [
   {id:"p4",n:"Ceker Boneless",e:"🥘",h:35000,d:"Tanpa tulang, isi 150 gram, praktis dimakan."}
 ];
 /* ============================================ */
-
+ 
+// Rapikan nomor: boleh ditulis 0812..., +62812..., atau 62812...
+const noWA = n => { n = String(n).replace(/\D/g,""); if(n.startsWith("0")) n = "62"+n.slice(1); else if(n.startsWith("8")) n = "62"+n; return n; };
+const NOMOR_CONTOH = "6281234567890";
+ 
 const rp = n => "Rp " + n.toLocaleString("id-ID");
 const $ = id => document.getElementById(id);
 let cart = [];
 try { cart = JSON.parse(localStorage.getItem("po_cart")||"[]"); } catch(e){ cart = []; }
 const save = () => { try{ localStorage.setItem("po_cart", JSON.stringify(cart)); }catch(e){} };
 let cur = null, qty = 1;
-
+ 
 $("poInfo").textContent = INFO_PO;
 $("grid").innerHTML = PRODUK.map(p => `
   <article class="card"><div class="thumb" aria-hidden="true">${p.e}</div>
   <div class="body"><h3>${p.n}</h3><p>${p.d}</p><div class="price">${rp(p.h)}</div>
   <button class="btn" data-id="${p.id}">Pilih topping &amp; PO</button></div></article>`).join("");
 $("grid").onclick = e => { const b = e.target.closest("button[data-id]"); if (b) openModal(b.dataset.id); };
-
+ 
 function openModal(id){
   cur = PRODUK.find(p => p.id === id); qty = 1;
   $("mName").textContent = cur.n; $("mBase").textContent = rp(cur.h);
@@ -52,7 +56,7 @@ $("mAdd").onclick = () => {
   cart.push({nama:cur.n, level:LEVEL[lv], topping:tp.map(t=>t.n), tanggalPO:$("mDate").value, qty, unit:unit()});
   save(); render(); $("modal").classList.remove("open");
 };
-
+ 
 function total(){ return cart.reduce((s,i)=>s+i.unit*i.qty,0); }
 function render(){
   $("count").textContent = cart.reduce((s,i)=>s+i.qty,0);
@@ -80,11 +84,12 @@ $("fab").onclick = () => $("cartM").classList.add("open");
 $("cClose").onclick = () => $("cartM").classList.remove("open");
 [$("modal"),$("cartM")].forEach(o => o.addEventListener("click", e => { if(e.target===o) o.classList.remove("open"); }));
 document.addEventListener("keydown", e => { if(e.key==="Escape") document.querySelectorAll(".overlay").forEach(o=>o.classList.remove("open")); });
-
+ 
 $("send").onclick = () => {
   const nama = $("nama").value.trim(), hp = $("wa").value.trim(), alamat = $("alamat").value.trim();
   if (!cart.length) return;
   if (!nama || !hp || !alamat){ $("cErr").textContent = "Isi nama, nomor WhatsApp, dan alamat lengkap."; return; }
+  if (noWA(NO_WA_PENJUAL) === NOMOR_CONTOH){ $("cErr").textContent = "Nomor WA penjual belum diganti. Edit NO_WA_PENJUAL di script.js."; return; }
   $("cErr").textContent = "";
   let p = "Halo Admin, saya mau konfirmasi Pre-Order Ceker:\n\n";
   cart.forEach((it,i)=>{
@@ -97,17 +102,23 @@ $("send").onclick = () => {
   p += `💰 *TOTAL:* ${rp(total())}\n\n👤 *DATA PEMESAN:*\n`;
   p += `- Nama: ${nama}\n- No. WA: ${hp}\n- Alamat: ${alamat}\n- Opsi Kirim: ${$("kirim").value}\n\n`;
   p += "Mohon info total ongkir & nomor rekening pembayaran. Terima kasih!";
-  const url = `https://wa.me/${NO_WA_PENJUAL}?text=${encodeURIComponent(p)}`;
+  // HP: api.whatsapp.com membuka aplikasi WA langsung ke chat penjual.
+  // Laptop/PC: web.whatsapp.com langsung masuk ke chat (tanpa halaman perantara wa.me).
+  const nomor = noWA(NO_WA_PENJUAL), teks = encodeURIComponent(p);
+  const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const url = mobile
+    ? `https://api.whatsapp.com/send?phone=${nomor}&text=${teks}`
+    : `https://web.whatsapp.com/send?phone=${nomor}&text=${teks}`;
   const w = window.open(url, "_blank");
   if (!w) { window.location.href = url; return; } // popup diblokir: buka di tab ini, keranjang tetap aman
-
+ 
   // Pesanan terkirim: kosongkan keranjang & form
   cart = []; save(); render();
   ["nama","wa","alamat"].forEach(id => $(id).value = "");
   $("cartM").classList.remove("open");
   toast("Pesanan dikirim ke WhatsApp. Terima kasih!");
 };
-
+ 
 function toast(msg){
   const t = document.createElement("div");
   t.className = "toast"; t.textContent = msg; t.setAttribute("role","status");
