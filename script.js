@@ -1,5 +1,5 @@
 /* ====== PENGATURAN TOKO — ubah di sini ====== */
-const NO_WA_PENJUAL = "6283820087262";           // format 62, tanpa 0 / +
+const NO_WA_PENJUAL = "62";           // format 62, tanpa 0 / +
 const INFO_PO = "Batch terdekat: pengiriman Sabtu & Minggu. Kuota terbatas.";
 const TANGGAL_PO = ["Sabtu, 25 Okt 2026","Minggu, 26 Okt 2026","Sabtu, 1 Nov 2026"]; // batch PO
 const LEVEL = ["Level 0 (Original)","Level 1 (Pedas Ringan)","Level 2 (Pedas Sedang)","Level 3 (Pedas)","Level 4 (Sangat Pedas)","Level 5 (Extra Mercon)"];
