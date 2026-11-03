@@ -1,5 +1,5 @@
 /* ====== PENGATURAN TOKO — ubah di sini ====== */
-const NO_WA_PENJUAL = "62";           // format 62, tanpa 0 / +
+const NO_WA_PENJUAL = "6287824771620";           // format 62, tanpa 0 / +
 const INFO_PO = "Batch terdekat: pengiriman Sabtu & Minggu. Kuota terbatas.";
 const TANGGAL_PO = ["Sabtu, 25 Okt 2026","Minggu, 26 Okt 2026","Sabtu, 1 Nov 2026"]; // batch PO
 const LEVEL = ["Level 0 (Original)","Level 1 (Pedas Ringan)","Level 2 (Pedas Sedang)","Level 3 (Pedas)","Level 4 (Sangat Pedas)","Level 5 (Extra Mercon)"];
@@ -15,9 +15,9 @@ const PRODUK = [
 ];
 /* ============================================ */
  
-// Rapikan nomor: boleh ditulis 0812..., +62812..., atau 62812...
+
 const noWA = n => { n = String(n).replace(/\D/g,""); if(n.startsWith("0")) n = "62"+n.slice(1); else if(n.startsWith("8")) n = "62"+n; return n; };
-const NOMOR_CONTOH = "6281234567890";
+
  
 const rp = n => "Rp " + n.toLocaleString("id-ID");
 const $ = id => document.getElementById(id);
@@ -102,8 +102,7 @@ $("send").onclick = () => {
   p += `💰 *TOTAL:* ${rp(total())}\n\n👤 *DATA PEMESAN:*\n`;
   p += `- Nama: ${nama}\n- No. WA: ${hp}\n- Alamat: ${alamat}\n- Opsi Kirim: ${$("kirim").value}\n\n`;
   p += "Mohon info total ongkir & nomor rekening pembayaran. Terima kasih!";
-  // HP: api.whatsapp.com membuka aplikasi WA langsung ke chat penjual.
-  // Laptop/PC: web.whatsapp.com langsung masuk ke chat (tanpa halaman perantara wa.me).
+
   const nomor = noWA(NO_WA_PENJUAL), teks = encodeURIComponent(p);
   const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   const url = mobile
