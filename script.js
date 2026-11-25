@@ -8,11 +8,11 @@ const TOPPING = [
   {n:"Sosis",h:4000},{n:"Dumpling",h:5000},{n:"Tahu Bakso",h:3000}
 ];
 const PRODUK = [
-  {id:"p1",n:"Ceker Mercon Kuah",foto:"img/ceker-mercon-kuah.webp",h:25000,d:"Ceker empuk dalam kuah sambal merah pedas segar. Cocok untuk pecinta pedas."},
-  {id:"p2",n:"Ceker Cabai Hijau",foto:"img/ceker-cabai-hijau.webp",h:25000,d:"Dibalut sambal cabai hijau, pedas gurih dengan aroma segar."},
-  {id:"p3",n:"Ceker BBQ",foto:"img/ceker-bbq.webp",h:25000,d:"Bumbu BBQ manis gurih, dipanggang legit dengan taburan wijen."},
-  {id:"p4",n:"Ceker Salted Egg",foto:"img/ceker-salted-egg.webp",h:28000,d:"Saus telur asin yang creamy, gurih, dengan daun jeruk harum."},
-  {id:"p5",n:"Ceker Lada Hitam",foto:"img/ceker-lada-hitam.webp",h:25000,d:"Bumbu lada hitam yang pekat dan meresap, hangat di setiap gigitan."}
+  {id:"p1",n:"Ceker Mercon Kuah",foto:"img/logoweb/bbq.jpg",h:25000,d:"Ceker empuk dalam kuah sambal merah pedas segar. Cocok untuk pecinta pedas."},
+  {id:"p2",n:"Ceker Cabai Hijau",foto:"img/logoweb/hijau.jpg",h:25000,d:"Dibalut sambal cabai hijau, pedas gurih dengan aroma segar."},
+  {id:"p3",n:"Ceker BBQ",foto:"img/logoweb/bbq.jpg",h:25000,d:"Bumbu BBQ manis gurih, dipanggang legit dengan taburan wijen."},
+  {id:"p4",n:"Ceker Salted Egg",foto:"img/logoweb/salted-egg.jpg",h:28000,d:"Saus telur asin yang creamy, gurih, dengan daun jeruk harum."},
+  {id:"p5",n:"Ceker Lada Hitam",foto:"img/logoweb/lada-hitam.jpg",h:25000,d:"Bumbu lada hitam yang pekat dan meresap, hangat di setiap gigitan."}
 ];
 /* ============================================ */
 
