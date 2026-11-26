@@ -29,7 +29,7 @@ let cur = null, qty = 1;
 
 $("poInfo").textContent = INFO_PO;
 $("grid").innerHTML = PRODUK.map(p => `
-  <article class="card"><div class="thumb"><img src="${p.foto}" alt="${p.n}" loading="lazy"></div>
+  <article class="card"><div class="thumb"><img src="${p.foto}" alt="${p.n}" width="600" height="600" loading="lazy" decoding="async"></div>
   <div class="body"><h3>${p.n}</h3><p>${p.d}</p><div class="price">${rp(p.h)}</div>
   <button class="btn" data-id="${p.id}">Pilih topping &amp; PO</button></div></article>`).join("");
 $("grid").onclick = e => { const b = e.target.closest("button[data-id]"); if (b) openModal(b.dataset.id); };

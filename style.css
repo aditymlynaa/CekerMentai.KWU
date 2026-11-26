@@ -15,7 +15,6 @@ header p{opacity:.92;max-width:46ch;margin-top:6px}
 main h2{font-size:1.5rem;margin:26px 0 14px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
-.thumb{height:150px;display:grid;place-items:center;font-size:4.2rem;background:linear-gradient(135deg,#ffd9a8,#ff8a65)}
 .card .body{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
 .card h3{font-size:1.15rem}
 .card p{color:var(--mute);font-size:.92rem;flex:1}
@@ -128,21 +127,35 @@ footer{text-align:center;color:var(--mute);font-size:.85rem;margin-top:36px;padd
 }
 
 /* ===== Foto produk ===== */
+/* PENGATURAN FOTO MENU — semua foto produk memakai satu ukuran bingkai.
+   Ganti --foto-menu-rasio untuk mengubah bentuknya:
+   1 / 1 = kotak, 4 / 3 = landscape, 3 / 4 = portrait.
+   --foto-menu-posisi mengatur bagian foto yang ditonjolkan saat dipotong. */
+:root{
+    --foto-menu-rasio: 1 / 1;
+    --foto-menu-posisi: center 10%;
+    --foto-menu-latar: var(--line);
+    --foto-hero-rasio: 1 / 1
+}
 .thumb{
+    flex:none;
     display:block;
-    height:auto;
-    aspect-ratio:1/1;
-    font-size:0;
-    background:var(--line)
+    width:100%;
+    aspect-ratio:var(--foto-menu-rasio);
+    overflow:hidden; /* wajib: cegah foto mendorong tinggi kartu */
+    background:var(--foto-menu-latar)
 }
 .thumb img{
     display:block;
     width:100%;
     height:100%;
     object-fit:cover;
-    object-position:center 10%
+    object-position:var(--foto-menu-posisi)
 }
-.frame img{aspect-ratio:1/1}
+.frame img{
+    height:auto;
+    aspect-ratio:var(--foto-hero-rasio)
+}
 
 /* ===== Header dengan logo ===== */
 header{background:#fff;color:#7a625b;border-bottom:4px solid var(--orange);padding:18px 0}
